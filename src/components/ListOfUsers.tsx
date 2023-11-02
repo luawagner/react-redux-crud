@@ -9,34 +9,20 @@ import {
   Title,
   Badge
 } from "@tremor/react";
+import { useAppDispatch, useAppSelector } from "../hooks/store";
+import { deleteUserById } from '../store/users/slice';
 
-const users: {
-  id: string;
-  name: string;
-  email: string;
-  github: string;
-}[] = [
-  {
-    id: "1",
-    name: "Peter Doe",
-    email: "peterdoe@gmail.com",
-    github: "peterDoe",
-  },
-  {
-    id: "2",
-    name: "Lena Whitehouse",
-    email: "lenaw@gmail.com",
-    github: "lena Whitehouse",
-  },
-  {
-    id: "3",
-    name: "Phil Less",
-    email: "philL@gmail.com",
-    github: "Phil Less",
-  },
-];
+ 
+
 
 export default function ListOfUsers() {
+  //este useAppSelector sabe que en el estado vamos a tener el array de users
+  const users = useAppSelector((state) => state.users)
+  const dispatch = useAppDispatch()
+const handleRemoveUser = (id: UserId) => {
+  dispatch(deleteUserById(id))
+}
+
   return (
     <Card>
         <Title>
@@ -83,7 +69,7 @@ export default function ListOfUsers() {
                     />
                   </svg>
                 </button>
-                <button type="button">
+                <button onClick={()=> handleRemoveUser(item.id)} type="button">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
