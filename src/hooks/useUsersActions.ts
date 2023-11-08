@@ -4,6 +4,8 @@ import { useAppDispatch } from './store'
 
 //es una buena práctica tener los dispatch en un custom hook.
 //y llamarlos desde los componentes que lo requieran
+
+//VER SCREAMING ARCHITECTURE
 export const useUsersActions = () => {
 
     const dispatch = useAppDispatch()

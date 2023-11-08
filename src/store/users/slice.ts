@@ -1,17 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export type UserId = string;
-
-export interface User {
-    name: string,
-    email: string,
-    github: string
-}
-
-export interface userWithId extends User {
-    id: UserId
-}
-const initialState: userWithId[] = [
+const DEFAULT_STATE = [
     {
         id: "1",
         name: "Peter Doe",
@@ -30,7 +19,28 @@ const initialState: userWithId[] = [
         email: "philL@gmail.com",
         github: "Phil Less",
       },
-    ];  
+    ]; 
+export type UserId = string;
+
+export interface User {
+    name: string,
+    email: string,
+    github: string
+}
+
+export interface userWithId extends User {
+    id: UserId
+}
+const initialState: userWithId[] =  (() => {
+    //leemos el localStorage
+    const persistedState = localStorage.getItem('reduxState');
+    if (persistedState) {
+        //si tenemos un estado guardado en localStorage pedimos el .users
+        return JSON.parse(persistedState).users
+        //tenemos que parsearlo
+    }//y sino el estado por defecto
+    return DEFAULT_STATE
+})();
 
 //Slice es un trocito de la store que guarda las acciones reducers y el estado
 //que tienen que ver con, en este caso, users
